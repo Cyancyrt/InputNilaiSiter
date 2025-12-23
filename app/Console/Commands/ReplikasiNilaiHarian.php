@@ -3,30 +3,41 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use App\Models\Nilai;
-// use App\Models\NilaiLog; // Contoh jika ingin direplikasi ke tabel lain
 
 class ReplikasiNilaiHarian extends Command
 {
-    // Nama command yang akan dipanggil
     protected $signature = 'nilai:replikasi-harian';
-
-    // Deskripsi command
-    protected $description = 'Melakukan replikasi data nilai ke tabel riwayat harian';
+    protected $description = 'Menarik data terbaru dari VPS Master ke Local Slave';
 
     public function handle()
     {
-        $this->info('Memulai proses replikasi...');
+        $this->info('--- Memulai Replikasi Jam 24.00 ---');
 
-        // Contoh Logika: Mengambil data yang dibuat hari ini dan memprosesnya
-        $dataHariIni = Nilai::whereDate('created_at', today())->get();
+        try {
+            // 1. Ambil data dari koneksi 'vps_master' (Database VPS)
+            // Pastikan koneksi ini sudah ada di config/database.php
+            $dataMaster = DB::connection('mysql_master')
+                            ->table('nilais')
+                            ->get();
 
-        foreach ($dataHariIni as $item) {
-            // Jalankan logika replikasi Anda di sini
-            // Contoh: Simpan ke tabel log atau kirim ke database lain
-            $this->info("Memproses data ID: {$item->id}");
+            $this->info("Ditemukan " . $dataMaster->count() . " data di Master.");
+
+            // 2. Masukkan ke database Lokal (Slave)
+            foreach ($dataMaster as $row) {
+                // Menggunakan updateOrInsert agar data yang sudah ada diupdate, 
+                // dan data yang belum ada ditambah (mencegah duplikat ID)
+                DB::table('nilais')->updateOrInsert(
+                    ['id' => $row->id], // Kunci unik
+                    (array) $row        // Data lainnya
+                );
+            }
+
+            $this->info('Replikasi Master ke Slave berhasil disinkronkan.');
+            
+        } catch (\Exception $e) {
+            $this->error('Gagal melakukan replikasi: ' . $e->getMessage());
         }
-
-        $this->info('Replikasi selesai dengan sukses.');
     }
 }
