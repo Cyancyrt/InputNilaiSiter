@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_mk')->unique(); // Contoh: MK001
             $table->string('nama_mk');           // Contoh: Pemrograman Web
+            $table->integer('semester');
+            $table->string('prodi')->nullable();           // Contoh: A
             $table->integer('sks');
             $table->timestamps();
         });

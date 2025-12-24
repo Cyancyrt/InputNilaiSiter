@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
         ]);
         // 1. Tambah Data Mata Kuliah
         $matkul = [
-            ['kode_mk' => 'MK01', 'nama_mk' => 'Pemrograman Web', 'sks' => 3],
-            ['kode_mk' => 'MK02', 'nama_mk' => 'Basis Data', 'sks' => 3],
-            ['kode_mk' => 'MK03', 'nama_mk' => 'Algoritma & Struktur Data', 'sks' => 4],
-            ['kode_mk' => 'MK04', 'nama_mk' => 'Jaringan Komputer', 'sks' => 3],
-            ['kode_mk' => 'MK05', 'nama_mk' => 'Kecerdasan Buatan', 'sks' => 3],
+            ['kode_mk' => 'MK01', 'nama_mk' => 'Pemrograman Web', 'sks' => 3, 'semester' => 1, 'prodi' => 'A'],
+            ['kode_mk' => 'MK02', 'nama_mk' => 'Basis Data', 'sks' => 3, 'semester' => 1, 'prodi' => 'A'],
+            ['kode_mk' => 'MK03', 'nama_mk' => 'Algoritma & Struktur Data', 'sks' => 4, 'semester' => 1, 'prodi' => 'A'],
+            ['kode_mk' => 'MK04', 'nama_mk' => 'Jaringan Komputer', 'sks' => 3, 'semester' => 2, 'prodi' => 'A'],
+            ['kode_mk' => 'MK05', 'nama_mk' => 'Kecerdasan Buatan', 'sks' => 3, 'semester' => 2, 'prodi' => 'A'],
         ];
 
         foreach ($matkul as $mk) {

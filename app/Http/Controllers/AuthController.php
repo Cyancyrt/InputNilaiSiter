@@ -21,7 +21,7 @@ class AuthController extends Controller
         // Proses autentikasi
         if (FacadesAuth::attempt($credentials)) {
             $request->session()->regenerate(); // Mencegah session fixation (Keamanan)
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
