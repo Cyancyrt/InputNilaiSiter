@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mata_kuliahs', function (Blueprint $table) {
+        Schema::create('krs', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_mk')->unique(); // Contoh: MK001
-            $table->string('nama_mk');           // Contoh: Pemrograman Web
-            $table->integer('semester');
-            $table->string('prodi')->nullable();           // Contoh: A
-            $table->integer('sks');
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mata_kuliahs');
+        Schema::dropIfExists('krs');
     }
 };

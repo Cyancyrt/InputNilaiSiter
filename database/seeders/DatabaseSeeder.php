@@ -49,6 +49,5 @@ class DatabaseSeeder extends Seeder
                 'status'        => 'Aktif',
             ]);
         }
-    
     }
 }
